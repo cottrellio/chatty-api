@@ -14,7 +14,7 @@ config :chatty_web,
 config :chatty_web, Chatty.Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "hoY3iOcm+lrEbE1r/ChamMyrFFF6nS4A43ro9oSkTnAdrIZOCZ559faTSlzxKmJE",
-  render_errors: [view: Chatty.Web.ErrorView, accepts: ~w(json)],
+  render_errors: [view: Chatty.Web.ErrorView, accepts: ~w(json json-api)],
   pubsub: [name: Chatty.Web.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
@@ -25,6 +25,14 @@ config :logger, :console,
 
 config :chatty_web, :generators,
   context_app: :chatty
+
+# Configure JSON API mime type.
+config :phoenix, :format_encoders,
+  "json-api": Poison
+
+config :mime, :types, %{
+  "application/vnd.api+json" => ["json-api"]
+}
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

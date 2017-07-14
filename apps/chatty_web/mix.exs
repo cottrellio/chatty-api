@@ -37,7 +37,8 @@ defmodule Chatty.Web.Mixfile do
      {:phoenix_ecto, "~> 3.2"},
      {:gettext, "~> 0.11"},
      {:chatty, in_umbrella: true},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:cors_plug, "~> 1.3"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

@@ -36,6 +36,9 @@ defmodule Chatty.Web.Endpoint do
     key: "_chatty_web_key",
     signing_salt: "fTTiAWCN"
 
+  # CORS
+  plug CORSPlug
+
   plug Chatty.Web.Router
 
   @doc """
