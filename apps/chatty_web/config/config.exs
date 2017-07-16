@@ -34,6 +34,17 @@ config :mime, :types, %{
   "application/vnd.api+json" => ["json-api"]
 }
 
+# Configure Guardian
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "Chatty.Web",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: System.get_env("GUARDIAN_SECRET") || "jjCXIjcwEaAarmI0pGiJ+25pPNx90/hywmphlsKTGzqew21DQpJOYJln8McCD2jz",
+  serializer: Chatty.Web.GuardianSerializer
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
