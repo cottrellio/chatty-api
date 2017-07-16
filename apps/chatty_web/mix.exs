@@ -21,7 +21,7 @@ defmodule Chatty.Web.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Chatty.Web.Application, []},
-     extra_applications: [:logger, :runtime_tools]]
+     extra_applications: [:logger, :runtime_tools, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,6 +38,7 @@ defmodule Chatty.Web.Mixfile do
      {:gettext, "~> 0.11"},
      {:chatty, in_umbrella: true},
      {:cors_plug, "~> 1.3"},
+     {:comeonin, "~> 3.2"},
      {:guardian, "~> 0.14"},
      {:cowboy, "~> 1.0"}]
   end

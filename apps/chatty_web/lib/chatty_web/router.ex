@@ -9,5 +9,7 @@ defmodule Chatty.Web.Router do
     pipe_through :api
     # Session
     resources "session", SessionController, only: [:index]
+    # Accounts_User
+    resources "/users", UserController, except: [:new, :edit]
   end
 end
