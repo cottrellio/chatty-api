@@ -29,10 +29,13 @@ defmodule Chatty.Web.UserControllerTest do
     conn = get conn, user_path(conn, :show, id)
     assert json_response(conn, 200)["data"] == %{
       "id" => id,
-      "email" => "joe@example.com",
-      "first_name" => "Joe",
-      "last_name" => "Example",
-      "username" => "joe.example"}
+      "type" => "user",
+      "attributes" => %{
+        "email" => "joe@example.com",
+        "first-name" => "Joe",
+        "last-name" => "Example",
+        "username" => "joe.example"}
+      }
   end
 
   test "does not create user and renders errors when data is invalid", %{conn: conn} do
@@ -41,17 +44,20 @@ defmodule Chatty.Web.UserControllerTest do
   end
 
   test "updates chosen user and renders user when data is valid", %{conn: conn} do
-    %User{id: id} = user = fixture(:user)
+    %User{} = user = fixture(:user)
     conn = put conn, user_path(conn, :update, user), user: @update_attrs
-    assert %{"id" => ^id} = json_response(conn, 200)["data"]
+    assert %{"id" => id} = json_response(conn, 200)["data"]
 
     conn = get conn, user_path(conn, :show, id)
     assert json_response(conn, 200)["data"] == %{
       "id" => id,
-      "email" => "joey@example.com",
-      "first_name" => "Joey",
-      "last_name" => "Exemplar",
-      "username" => "joey.exemplar"}
+      "type" => "user",
+      "attributes" => %{
+        "email" => "joey@example.com",
+        "first-name" => "Joey",
+        "last-name" => "Exemplar",
+        "username" => "joey.exemplar"}
+      }
   end
 
   test "does not update chosen user and renders errors when data is invalid", %{conn: conn} do

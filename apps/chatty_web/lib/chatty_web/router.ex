@@ -7,8 +7,10 @@ defmodule Chatty.Web.Router do
 
   scope "/api", Chatty.Web do
     pipe_through :api
+    # Register
+    post "/register", RegistrationController, :create
     # Session
-    resources "session", SessionController, only: [:index]
+    resources "/session", SessionController, only: [:index]
     # Accounts_User
     resources "/users", UserController, except: [:new, :edit]
   end

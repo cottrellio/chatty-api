@@ -38,6 +38,7 @@ defmodule Chatty.Web.Mixfile do
      {:gettext, "~> 0.11"},
      {:chatty, in_umbrella: true},
      {:cors_plug, "~> 1.3"},
+     {:ja_serializer, "~> 0.12"},
      {:comeonin, "~> 3.2"},
      {:guardian, "~> 0.14"},
      {:cowboy, "~> 1.0"}]
