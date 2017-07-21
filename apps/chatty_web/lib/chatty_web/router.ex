@@ -3,15 +3,27 @@ defmodule Chatty.Web.Router do
 
   pipeline :api do
     plug :accepts, ["json", "json-api"]
+    plug JaSerializer.Deserializer
+  end
+
+  # Authenticated requests.
+  pipeline :api_auth do
+    plug :accepts, ["json", "json-api"]
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/api", Chatty.Web do
     pipe_through :api
-    # Register
+    # Registration.
     post "/register", RegistrationController, :create
-    # Session
-    resources "/session", SessionController, only: [:index]
-    # Accounts_User
-    resources "/users", UserController, except: [:new, :edit]
+    # Login.
+    post "/token", SessionController, :create, as: :login
+  end
+
+  scope "/api", Chatty.Web do
+    pipe_through :api_auth
+    # Current user.
+    get "/user/current", UserController, :current
   end
 end

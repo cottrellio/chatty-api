@@ -2,7 +2,6 @@ defmodule Chatty.Web.RegistrationController do
   use Chatty.Web, :controller
 
   alias Chatty.Accounts
-  alias Chatty.Accounts.User
 
   def create(conn, %{"data" => data}) do
     attrs = JaSerializer.Params.to_attributes(data)
@@ -15,7 +14,7 @@ defmodule Chatty.Web.RegistrationController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Chatty.Web.ChangesetView, "error.json-api", data: changeset)
+        |> render(Chatty.Web.ChangesetView, "error.json", data: changeset)
     end
   end
 end

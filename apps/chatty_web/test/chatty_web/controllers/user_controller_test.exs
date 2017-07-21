@@ -6,7 +6,7 @@ defmodule Chatty.Web.UserControllerTest do
 
   @create_attrs %{email: "joe@example.com", first_name: "Joe", last_name: "Example", username: "joe.example", password: "abcde12345", password_confirmation: "abcde12345"}
   @update_attrs %{email: "joey@example.com", first_name: "Joey", last_name: "Exemplar", username: "joey.exemplar", password: "12345abcde", password_confirmation: "12345abcde"}
-  @invalid_attrs %{email: nil, first_name: nil, last_name: nil, password_hash: nil, username: nil}
+  @invalid_attrs %{email: nil, first_name: nil, last_name: nil, password: nil, password_confirmation: nil, username: nil}
 
   def fixture(:user) do
     {:ok, user} = Accounts.create_user(@create_attrs)

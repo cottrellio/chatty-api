@@ -1,4 +1,4 @@
-defmodule Chatty.GuardianSerializer do
+defmodule Chatty.Web.GuardianSerializer do
   @behaviour Guardian.Serializer
 
   alias Chatty.Accounts
