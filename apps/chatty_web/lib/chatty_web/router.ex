@@ -9,7 +9,7 @@ defmodule Chatty.Web.Router do
   # Authenticated requests.
   pipeline :api_auth do
     plug :accepts, ["json", "json-api"]
-    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
     plug Guardian.Plug.LoadResource
   end
 
@@ -24,6 +24,6 @@ defmodule Chatty.Web.Router do
   scope "/api", Chatty.Web do
     pipe_through :api_auth
     # Current user.
-    get "/user/current", UserController, :current
+    get "/users/me", UserController, :current
   end
 end

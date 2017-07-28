@@ -1,6 +1,8 @@
 defmodule Chatty.Web.RegistrationController do
   use Chatty.Web, :controller
 
+  import Logger
+
   alias Chatty.Accounts
 
   def create(conn, %{"data" => data}) do
@@ -8,6 +10,8 @@ defmodule Chatty.Web.RegistrationController do
 
     case Accounts.create_user attrs do
       {:ok, user} ->
+        Logger.info("Account was successfully created for " <> user.email <> ".")
+
         conn
         |> put_status(:created)
         |> render(Chatty.Web.UserView, "show.json-api", data: user)

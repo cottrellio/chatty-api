@@ -1,7 +1,7 @@
 defmodule Chatty.Web.SessionController do
   use Chatty.Web, :controller
 
-  import Ecto.Query, only: [where: 3, or_where: 3]
+  import Ecto.Query, only: [where: 3]
   import Comeonin.Bcrypt
   import Logger
 
@@ -13,17 +13,16 @@ defmodule Chatty.Web.SessionController do
     "password" => password}) do
 
     try do
-      # Attempt to retrieve exactly one user from the DB, whose email || username
+      # Attempt to retrieve exactly one user from the DB, whose email
       # matches the one provided with the login request.
       user = User
       |> where([u], u.email == ^username)
-      |> or_where([u], u.username == ^username)
       |> Repo.one!
       cond do
 
         checkpw(password, user.password_hash) ->
           # Successful login.
-          Logger.info "User " <> user.username <> " just logged in."
+          Logger.info "User " <> username <> " just logged in."
           # Encode a JWT
           { :ok, jwt, _ } = Guardian.encode_and_sign(user, :token)
           conn
@@ -31,7 +30,7 @@ defmodule Chatty.Web.SessionController do
 
         true ->
           # Unsuccessful login.
-          Logger.warn "User " <> user.username <> " just failed to login."
+          Logger.warn "User " <> username <> " just failed to login."
           conn
           |> put_status(401)
           |> render(Chatty.Web.ErrorView, "401.json-api")
