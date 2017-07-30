@@ -18,7 +18,7 @@ defmodule Chatty.Web.RegistrationController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Chatty.Web.ChangesetView, "error.json", data: changeset)
+        |> render(Chatty.Web.ChangesetView, "error.json-api", changeset: changeset)
     end
   end
 end
