@@ -3,28 +3,42 @@ defmodule Chatty.Web.ErrorView do
   use JaSerializer.PhoenixView
 
   def render("401.json-api", assigns) do
-    %{title: "Unauthorized", code: 401}
-    |> Map.merge(assigns.data)
+    data = Map.get(assigns, :data, %{})
+
+    %{title: "Unauthorized", status: 401}
+    |> Map.merge(data)
     |> JaSerializer.ErrorSerializer.format
   end
 
-  def render("403.json-api", _assigns) do
-    %{title: "Forbidden", code: 403}
+  def render("403.json-api", assigns) do
+    data = Map.get(assigns, :data, %{})
+
+    %{title: "Forbidden", status: 403}
+    |> Map.merge(data)
     |> JaSerializer.ErrorSerializer.format
   end
 
-  def render("404.json-api", _assigns) do
-    %{title: "Not Found", code: 404}
+  def render("404.json-api", assigns) do
+    data = Map.get(assigns, :data, %{})
+
+    %{title: "Not Found", status: 404}
+    |> Map.merge(data)
     |> JaSerializer.ErrorSerializer.format
   end
 
-  def render("422.json-api", _assigns) do
-    %{title: "Unprcessable Entity", code: 422}
+  def render("422.json-api", assigns) do
+    data = Map.get(assigns, :data, %{})
+
+    %{title: "Unprcessable Entity", status: 422}
+    |> Map.merge(data)
     |> JaSerializer.ErrorSerializer.format
   end
 
-  def render("500.json-api", _assigns) do
-    %{title: "Internal Server Error", code: 500}
+  def render("500.json-api", assigns) do
+    data = Map.get(assigns, :data, %{})
+
+    %{title: "Internal Server Error", status: 500}
+    |> Map.merge(data)
     |> JaSerializer.ErrorSerializer.format
   end
 

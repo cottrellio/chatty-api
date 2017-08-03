@@ -4,12 +4,12 @@ defmodule Chatty.Web.AuthErrorHandler do
   def unauthenticated(conn, params) do
     conn
     |> put_status(401)
-    |> render(Chatty.ErrorView, "401.json")
+    |> render(Chatty.Web.ErrorView, "401.json-api")
   end
 
   def unauthorized(conn, params) do
     conn
     |> put_status(403)
-    |> render(Chatty.ErrorView, "403.json")
+    |> render(Chatty.Web.ErrorView, "403.json-api")
   end
 end
