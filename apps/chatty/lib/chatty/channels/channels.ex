@@ -21,6 +21,7 @@ defmodule Chatty.Channels do
   def list_channels(%User{} = user) do
     Channel
     |> where([c], c.user_id == ^user.id)
+    |> preload(:user)
     |> Repo.all()
   end
 
@@ -34,7 +35,9 @@ defmodule Chatty.Channels do
 
   """
   def list_channels() do
-    Repo.all(Channel)
+    Channel
+    |> preload(:user)
+    |> Repo.all()
   end
 
   @doc """
@@ -51,7 +54,11 @@ defmodule Chatty.Channels do
       ** (Ecto.NoResultsError)
 
   """
-  def get_channel!(id), do: Repo.get!(Channel, id)
+  def get_channel!(id) do
+    Channel
+    |> preload(:user)
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a channel.

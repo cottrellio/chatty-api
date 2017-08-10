@@ -1,20 +1,24 @@
 defmodule Chatty.ChannelsTest do
   use Chatty.DataCase
 
+  alias Chatty.Accounts
   alias Chatty.Channels
 
   describe "channels" do
     alias Chatty.Channels.Channel
 
+    @create_user %{email: "joe@example.com", first_name: "Joe", last_name: "Example", username: "joe.example", password: "abcde12345", password_confirmation: "abcde12345"}
     @valid_attrs %{name: "some name", purpose: "some purpose"}
     @update_attrs %{name: "some updated name", purpose: "some updated purpose"}
     @invalid_attrs %{name: nil, purpose: nil}
 
     def channel_fixture(attrs \\ %{}) do
+      {:ok, user} = Accounts.create_user(@create_user)
+      user = %{user | password: nil, password_confirmation: nil}
       {:ok, channel} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Channels.create_channel()
+        |> Channels.create_channel(user)
 
       channel
     end
@@ -30,13 +34,15 @@ defmodule Chatty.ChannelsTest do
     end
 
     test "create_channel/1 with valid data creates a channel" do
-      assert {:ok, %Channel{} = channel} = Channels.create_channel(@valid_attrs)
+      {:ok, user} = Accounts.create_user(@create_user)
+      assert {:ok, %Channel{} = channel} = Channels.create_channel(@valid_attrs, user)
       assert channel.name == "some name"
       assert channel.purpose == "some purpose"
     end
 
     test "create_channel/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Channels.create_channel(@invalid_attrs)
+      {:ok, user} = Accounts.create_user(@create_user)
+      assert {:error, %Ecto.Changeset{}} = Channels.create_channel(@invalid_attrs, user)
     end
 
     test "update_channel/2 with valid data updates the channel" do
