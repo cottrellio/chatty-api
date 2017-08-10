@@ -25,5 +25,9 @@ defmodule Chatty.Web.Router do
     pipe_through :api_auth
     # Current user.
     get "/users/me", UserController, :current
+    # Users
+    resources "/users", UserController, only: [:show]
+    # Channels.
+    resources "/channels", ChannelController, except: [:new, :edit]
   end
 end

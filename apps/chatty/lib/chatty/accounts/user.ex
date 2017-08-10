@@ -18,8 +18,8 @@ defmodule Chatty.Accounts.User do
     timestamps()
   end
 
-  @required_fields [:email, :password, :password_confirmation, :username]
-  @optional_fields [:first_name, :last_name]
+  @required_fields ~w(email password password_confirmation username)a
+  @optional_fields ~w(first_name last_name)a
   @all_fields @required_fields ++ @optional_fields
 
   @doc """
